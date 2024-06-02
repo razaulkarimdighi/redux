@@ -1,4 +1,5 @@
-const { createStore, combineReducers } = require("redux");
+const { createStore, combineReducers, applyMiddleware } = require("redux");
+const { default: logger } = require("redux-logger");
 //Define porduct const
 const PRODUCTS = "PRODUCTS"
 const ADD_PRODUCT = "ADD_PRODUCT"
@@ -64,6 +65,12 @@ const productReducer = ( state = productState , action) =>{
              products:   state.products,
              numberOfProducts : state.numberOfProducts
             }
+
+            case ADD_PRODUCT:
+            return{
+             products:   [...state.products, action.payload],
+             numberOfProducts : state.numberOfProducts + 1
+            }
     }
 
 
@@ -87,13 +94,13 @@ const cartReducer = ( state = cartState , action) =>{
 
 };
 
-const rootReducer = combineReducers({
-    p : productReducer,
-    c : cartReducer
-})
+// const rootReducer = combineReducers({
+//     p : productReducer,
+//     c : cartReducer
+// })
 
 //product store
-const store = createStore(rootReducer);
+const store = createStore(productReducer, applyMiddleware(logger));
 store.subscribe(() => {
   console.log(store.getState());
 });
@@ -111,5 +118,5 @@ store.dispatch(addProducts("Kola"))
 
 //dispatch cart store
 
-store.dispatch(getCart());
-store.dispatch(addCart("porota"));
+// store.dispatch(getCart());
+// store.dispatch(addCart("porota"));
