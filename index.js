@@ -77,7 +77,7 @@ const counterReducer = (state = initialCounterState, action) => {
       };
 
     default:
-      state;
+      return state;
   }
 };
 
@@ -91,7 +91,7 @@ const userReducer = (state = initialCounterState, action) =>{
             }
 
             default:
-                state;
+              return  state;
     }
 
 }
